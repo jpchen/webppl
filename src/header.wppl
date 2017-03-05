@@ -502,6 +502,8 @@ var Infer = function(options, maybeFn) {
     util.fatal(msg);
   }
   var method = methodMap[methodName];
+  if (method === MCMC && maybeFn() instanceof dists.Delta)
+    util.warn('MCMC being used with Delta dist will return trace 0');
   return method(wpplFn, _.omit(options, 'method', 'model'));
 };
 
